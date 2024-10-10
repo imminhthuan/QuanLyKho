@@ -1,0 +1,133 @@
+﻿@page "/nhaCungCap"
+@using BlazorApp4.Service
+@inject NhaCungCapService nhaCungCapService
+@rendermode InteractiveServer
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã Nhà Cung Cấp</th>
+            <th>Tên Nhà Cung Cấp</th>
+            <th>Ghi Chú</th>
+            <th>Hành Động</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (nhacungcap != null)
+        {
+            @foreach (var nhaCungCap in nhacungcap)
+            {
+                <tr>
+                    <td>@nhaCungCap.maNhaCungcap</td>
+                    <td>@nhaCungCap.tenNhaCungcap</td>
+                    <td>@nhaCungCap.ghiChu</td>
+                    <td><button @onclick="() => EditNhaCungCap(nhaCungCap)">Edit</button></td>
+                    <td><button @onclick="() => DeleteNhaCungCap(nhaCungCap.nhaCungCap_Auto_ID)">Delete</button></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Thêm/Chỉnh sửa Loại Sản Phẩm</h3>
+
+@if (!isEditing)
+{
+    <form @onsubmit="AddNhaCungCap">
+        <div>
+            <label for="maNhaCungcap">Mã Loại Sản Phẩm:</label>
+            <input id="maNhaCungcap" @bind="newNhaCungCap.maNhaCungcap" />
+        </div>
+        <div>
+            <label for="tenNhaCungcap">Tên Loại Sản Phẩm:</label>
+            <input id="tenNhaCungcap" @bind="newNhaCungCap.tenNhaCungcap" />
+        </div>
+
+        <div>
+            <label for="ghiChu">Ghi Chú:</label>
+            <input id="ghiChu" @bind="newNhaCungCap.ghiChu" />
+        </div>
+
+        <button type="submit">Thêm mới</button>
+    </form>
+}
+else
+{
+    <form @onsubmit="UpdateNhaCungCap">
+        <div>
+            <label for="maNhaCungcap">Mã Nhà Cung Cấp:</label>
+            <input id="maNhaCungcap" @bind="newNhaCungCap.maNhaCungcap" />
+        </div>
+        <div>
+            <label for="tenNhaCungcap">Tên Nhà Cung Cấp:</label>
+            <input id="tenNhaCungcap" @bind="newNhaCungCap.tenNhaCungcap" />
+        </div>
+
+        <div>
+            <label for="ghiChu">Ghi Chú:</label>
+            <input id="ghiChu" @bind="newNhaCungCap.ghiChu" />
+        </div>
+
+        <button type="submit">Lưu cập nhật</button>
+        <button type="button" @onclick="CancelEdit">Hủy</button>
+    </form>
+}
+
+
+@code {
+    private List<BlazorApp4.Models.NhaCungCap> nhacungcap;
+    private BlazorApp4.Models.NhaCungCap newNhaCungCap = new BlazorApp4.Models.NhaCungCap();
+    private bool isEditing = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        nhacungcap = await nhaCungCapService.GetAllNhaCungCap();
+    }
+
+    private async Task AddNhaCungCap()
+    {
+        await nhaCungCapService.AddNhaCungCapAsync(newNhaCungCap);
+        newNhaCungCap = new BlazorApp4.Models.NhaCungCap();
+        nhacungcap = await nhaCungCapService.GetAllNhaCungCap();
+    }
+
+    private async Task UpdateNhaCungCap()
+    {
+        await nhaCungCapService.UpdateNhaCungCapAsync(newNhaCungCap.nhaCungCap_Auto_ID, newNhaCungCap);
+        newNhaCungCap = new BlazorApp4.Models.NhaCungCap();
+        nhacungcap = await nhaCungCapService.GetAllNhaCungCap();
+        isEditing = false;
+    }
+
+    private async Task EditNhaCungCap(BlazorApp4.Models.NhaCungCap nhacungcap)
+    {
+        newNhaCungCap = new BlazorApp4.Models.NhaCungCap()
+            {
+                nhaCungCap_Auto_ID = nhacungcap.nhaCungCap_Auto_ID,
+                maNhaCungcap = nhacungcap.maNhaCungcap,
+                tenNhaCungcap = nhacungcap.tenNhaCungcap,
+                ghiChu = nhacungcap.ghiChu
+            };
+        isEditing = true;
+    }
+
+    private async Task DeleteNhaCungCap(int id)
+    {
+        await nhaCungCapService.DeleteNhaCungCapAsync(id);
+        nhacungcap = await nhaCungCapService.GetAllNhaCungCap();
+    }
+
+    private void CancelEdit()
+    {
+        newNhaCungCap = new BlazorApp4.Models.NhaCungCap();
+        isEditing = false;
+    }
+}

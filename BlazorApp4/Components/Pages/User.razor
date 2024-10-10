@@ -1,0 +1,161 @@
+﻿@page "/user"
+@using BlazorApp4.Service
+@inject UserService userservice
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Họ Và Tên</th>
+            <th>Mã Đăng Nhập</th>
+            <th>Mật Khẩu</th>
+            <th>Ghi Chú</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (users != null && users.Any())
+        {
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.hoTen</td>
+                    <td>@user.maDangNhap</td>
+                    <td>@user.matKhau</td>
+                    <td>@user.ghiChu</td>
+                    <td><button @onclick="() => EditUser(user)">Edit</button></td>
+                    <td><button @onclick="() => DeleteUser(user.user_Auto_ID)">Delete</button></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Thêm/Chỉnh sửa User</h3>
+
+<button class="btn btn-success" @onclick="() => { isEditing = false; newUser = new BlazorApp4.Models.User(); ShowModal(); }">Thêm mới</button>
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">@(!isEditing ? "Thêm mới người dùng" : "Chỉnh sửa người dùng")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="hoTen">Họ Và Tên:</label>
+                    <input class="form-control" id="hoTen" @bind="newUser.hoTen" />
+                </div>
+                <div class="form-group">
+                    <label for="maDangNhap">Mã Đăng Nhập:</label>
+                    <input class="form-control" id="maDangNhap" @bind="newUser.maDangNhap" />
+                </div>
+                <div class="form-group">
+                    <label for="matKhau">Mật Khẩu:</label>
+                    <input class="form-control" id="matKhau" @bind="newUser.matKhau" />
+                </div>
+                <div class="form-group">
+                    <label for="ghiChu">Ghi Chú:</label>
+                    <input class="form-control" id="ghiChu" @bind="newUser.ghiChu" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CancelEdit">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { if (isEditing) UpdateUser(); else AddUser(); }">@(!isEditing ? "Thêm mới" : "Lưu cập nhật")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.ShowModal = () => {
+        $('#userModal').modal('show');
+    };
+
+    window.HideModal = () => {
+        $('#userModal').modal('hide');
+    };
+</script>
+
+
+@code {
+    private List<BlazorApp4.Models.User> users;
+    private BlazorApp4.Models.User newUser = new BlazorApp4.Models.User();
+    private bool isEditing = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userservice.GetAllUserAync();
+    }
+
+    private async Task AddUser()
+    {
+        await userservice.AddAllUserAync(newUser);
+        newUser = new BlazorApp4.Models.User();
+        users = await userservice.GetAllUserAync();
+        HideModal();
+        StateHasChanged();
+    }
+
+    private async Task UpdateUser()
+    {
+        await userservice.UpdateAllUserAync(newUser.user_Auto_ID, newUser);
+        newUser = new BlazorApp4.Models.User();
+        users = await userservice.GetAllUserAync();
+        isEditing = false;
+        HideModal();
+        StateHasChanged();
+
+    }
+
+    private void EditUser(BlazorApp4.Models.User user)
+    {
+        newUser = new BlazorApp4.Models.User()
+            {
+                user_Auto_ID = user.user_Auto_ID,
+                maDangNhap = user.maDangNhap,
+                hoTen = user.hoTen,
+                matKhau = user.matKhau,
+                ghiChu = user.ghiChu
+            };
+        isEditing = true;
+        ShowModal();
+    }
+
+    private async Task DeleteUser(int id)
+    {
+        await userservice.DeleteUserAync(id);
+        users = await userservice.GetAllUserAync();
+    }
+
+    private void CancelEdit()
+    {
+        newUser = new BlazorApp4.Models.User();
+        isEditing = false;
+    }
+
+    private void ShowModal()
+    {
+        JSRuntime.InvokeVoidAsync("ShowModal");
+    }
+
+    private void HideModal()
+    {
+        JSRuntime.InvokeVoidAsync("HideModal");
+    }
+
+}
+

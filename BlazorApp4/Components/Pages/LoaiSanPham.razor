@@ -1,0 +1,155 @@
+﻿@page "/loaiSanPham"
+@using BlazorApp4.Service
+@inject LoaiSanPhamService loaiSanPhamService
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Auto_ID</th>
+            <th>Mã Loại Sản Phẩm</th>
+            <th>Tên Loại Sản Phẩm</th>
+            <th>Ghi Chú</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (loaiSanPhams != null && loaiSanPhams.Any())
+        {
+            @foreach (var loaiSanPham in loaiSanPhams)
+            {
+                <tr>
+                    <td>@loaiSanPham.loaiSanPham_Auto_ID</td>
+                    <td>@loaiSanPham.maLoaiSanPham</td>
+                    <td>@loaiSanPham.tenLoaiSanPham</td>
+                    <td>@loaiSanPham.ghiChu</td>
+                    <td>
+                        <button @onclick="() => DeleteLoaiSanPham(loaiSanPham.loaiSanPham_Auto_ID)">Delete</button>
+                        <button @onclick="() => EditLoaiSanPham(loaiSanPham)">Edit</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h3>Thêm/Chỉnh sửa Loại Sản Phẩm</h3>
+<button class="btn btn-success" @onclick="() => { isEditing = false; newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham(); ShoModal(); }">Thêm mới</button>
+
+<div class="modal fade" id="loaisanphamModal" tabindex="-1" aria-labelledby="loaisanphamModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loaisanphamModalLabel">@(!isEditing ? "Thêm mới Loại Sản Phẩm" : "Chỉnh sửa Loại Sản Phẩm")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="maLoaiSanPham">Mã Loại Sản Phẩm:</label>
+                    <input class="form-control" id="maLoaiSanPham" @bind="newLoaiSanPham.maLoaiSanPham" />
+                </div>
+                <div class="form-group">
+                    <label for="tenLoaiSanPham">Tên Loại Sản Phẩm:</label>
+                    <input class="form-control" id="tenLoaiSanPham" @bind="newLoaiSanPham.tenLoaiSanPham" />
+                </div>
+                <div class="form-group">
+                    <label for="ghiChu">Ghi Chú:</label>
+                    <input class="form-control" id="ghiChu" @bind="newLoaiSanPham.ghiChu" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CancelEdit">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { if (isEditing) UpdateLoaiSanPham(); else AddLoaiSanPham(); }">@(!isEditing ? "Thêm mới" : "Lưu cập nhật")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.ShoModal = () => {
+        $('#loaisanphamModal').modal('show');
+    };
+
+    window.HidModal = () => {
+        $('#loaisanphamModal').modal('hide');
+    };
+</script>
+
+@code {
+    private List<BlazorApp4.Models.LoaiSanPham> loaiSanPhams;
+    private BlazorApp4.Models.LoaiSanPham newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham();
+    private bool isEditing = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        loaiSanPhams = await loaiSanPhamService.GetAllLoaiSanPhamAsync();
+    }
+
+    private async Task AddLoaiSanPham()
+    {
+        await loaiSanPhamService.AddLoaiSanPhamAsync(newLoaiSanPham);
+        newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham();
+        loaiSanPhams = await loaiSanPhamService.GetAllLoaiSanPhamAsync();
+        HidModal();
+        StateHasChanged();
+    }
+
+    private async Task UpdateLoaiSanPham()
+    {
+        await loaiSanPhamService.UpdateLoaiSanPhamAsnc(newLoaiSanPham.loaiSanPham_Auto_ID, newLoaiSanPham);
+        newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham();
+        loaiSanPhams = await loaiSanPhamService.GetAllLoaiSanPhamAsync();
+        isEditing = false;
+        HidModal();
+        StateHasChanged();
+    }
+
+    private void EditLoaiSanPham(BlazorApp4.Models.LoaiSanPham loaiSanPham)
+    {
+        newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham()
+            {
+                loaiSanPham_Auto_ID = loaiSanPham.loaiSanPham_Auto_ID,
+                maLoaiSanPham = loaiSanPham.maLoaiSanPham,
+                tenLoaiSanPham = loaiSanPham.tenLoaiSanPham,
+                ghiChu = loaiSanPham.ghiChu
+            };
+        isEditing = true;
+        ShoModal();
+    }
+
+    private async Task DeleteLoaiSanPham(int id)
+    {
+        await loaiSanPhamService.DeleteLoaiSanPhamAsync(id);
+        loaiSanPhams = await loaiSanPhamService.GetAllLoaiSanPhamAsync();
+    }
+
+    private void CancelEdit()
+    {
+        newLoaiSanPham = new BlazorApp4.Models.LoaiSanPham();
+        isEditing = false;
+    }
+
+    private async Task ShoModal()
+    {
+        await JSRuntime.InvokeVoidAsync("ShoModal");
+    }
+
+    private async Task HidModal()
+    {
+        await JSRuntime.InvokeVoidAsync("HidModal");
+    }
+
+}
+

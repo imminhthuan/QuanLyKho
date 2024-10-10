@@ -1,0 +1,43 @@
+﻿@inject BlazorApp4.Service.NhapKhoService nhapkhoService
+@inject IJSRuntime JSRuntime
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Nội dung chi tiết nhập kho dựa vào selectedNhapKhoId -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int selectedNhapKhoId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        // Truy vấn dữ liệu chi tiết nhập kho dựa vào selectedNhapKhoId
+        // Ví dụ:
+        // var nhapKho = await nhapkhoService.GetNhapKhoByIdAsync(selectedNhapKhoId);
+    }
+
+    [JSInvokable]
+    public async Task ShowModal()
+    {
+        await JSRuntime.InvokeVoidAsync("$('#myModal').modal('show')");
+    }
+}

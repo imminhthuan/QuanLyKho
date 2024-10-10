@@ -1,0 +1,488 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\nhapkhoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\nhapkhoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\nhapkhorawdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\nhapkhorawdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\nhacungcapservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\nhacungcapservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\khoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\khoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\donvitinhservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\donvitinhservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\aplicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\aplicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\nhapkho.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\nhapkho.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\xuatkho.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\xuatkho.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\xuatkhorawdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\xuatkhorawdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\donvitinh.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\donvitinh.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\nhacungcap.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\nhacungcap.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\nhap_kho_raw_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\nhap_kho_raw_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\xuat_kho_raw_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\xuat_kho_raw_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\donvitinh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\donvitinh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\kho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\kho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\nhap_kho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\nhap_kho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\loaisanpham.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\loaisanpham.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\loaisanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\loaisanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\xuatkhoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\xuatkhoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\loaisanphamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\loaisanphamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\service\\khouserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\service\\khouserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\user.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\user.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\components\\pages\\sanpham.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\components\\pages\\sanpham.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|c:\\users\\banmu\\source\\repos\\blazorapp4\\blazorapp4\\models\\kho_user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FEC73EE-9802-4556-8AF7-117BFE21D082}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\kho_user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NhapKho.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\NhapKho.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\NhapKho.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\NhapKho.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\NhapKho.razor",
+              "ViewState": "AQIAAJIAAAAAAAAAAAAYwHoAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T03:26:17.512Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DonViTinh.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\DonViTinh.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\DonViTinh.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\DonViTinh.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\DonViTinh.razor",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAAAE8AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T10:28:36.888Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "XuatKho.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\XuatKho.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\XuatKho.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\XuatKho.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\XuatKho.razor",
+              "ViewState": "AQIAAPsBAAAAAAAAAAAAAAkCAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T02:32:53Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NhaCungCapService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhaCungCapService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\NhaCungCapService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhaCungCapService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\NhaCungCapService.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAwwCQAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T08:56:27.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NhapKhoRawDataService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhapKhoRawDataService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\NhapKhoRawDataService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhapKhoRawDataService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\NhapKhoRawDataService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwBcAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-07T04:49:11.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NhapKhoService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhapKhoService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\NhapKhoService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\NhapKhoService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\NhapKhoService.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAuwBkAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T03:03:07.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KhoService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\KhoService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\KhoService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\KhoService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\KhoService.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAIwC8AAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T08:56:03.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DonViTinhService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\DonViTinhService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\DonViTinhService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\DonViTinhService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\DonViTinhService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T08:55:57.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Program.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Program.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Program.cs",
+              "RelativeToolTip": "BlazorApp4\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T04:11:22.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "XuatKhoRawDataService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\XuatKhoRawDataService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\XuatKhoRawDataService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\XuatKhoRawDataService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\XuatKhoRawDataService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABcAAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T02:30:56.071Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\AplicationDbContext.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\AplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\AplicationDbContext.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\AplicationDbContext.cs",
+              "ViewState": "AQIAALcAAAAAAAAAAAAAAMcAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-07T04:53:33.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "NhaCungCap.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\NhaCungCap.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\NhaCungCap.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\NhaCungCap.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\NhaCungCap.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-23T11:23:43.368Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Nhap_Kho_Raw_Data.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Nhap_Kho_Raw_Data.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\Nhap_Kho_Raw_Data.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Nhap_Kho_Raw_Data.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\Nhap_Kho_Raw_Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBIAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-07T04:53:24.657Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\User.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\User.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T11:20:07.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DonViTinh.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\DonViTinh.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\DonViTinh.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\DonViTinh.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\DonViTinh.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T02:25:11.47Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Xuat_Kho_Raw_Data.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Xuat_Kho_Raw_Data.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\Xuat_Kho_Raw_Data.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Xuat_Kho_Raw_Data.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\Xuat_Kho_Raw_Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T03:10:06.114Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Kho.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Kho.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\Kho.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Kho.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\Kho.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-12T04:17:49.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Nhap_Kho.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Nhap_Kho.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\Nhap_Kho.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Nhap_Kho.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\Nhap_Kho.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAuwAoAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-07T04:53:30.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "XuatKhoService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\XuatKhoService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\XuatKhoService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\XuatKhoService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\XuatKhoService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T02:30:34.488Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "LoaiSanPham.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\LoaiSanPham.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\LoaiSanPham.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\LoaiSanPham.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\LoaiSanPham.razor",
+              "ViewState": "AQIAAI0AAAAAAAAAAAAYwJYAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T10:35:25.738Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LoaiSanPham.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\LoaiSanPham.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\LoaiSanPham.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\LoaiSanPham.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\LoaiSanPham.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T02:25:26.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "LoaiSanPhamService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\LoaiSanPhamService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\LoaiSanPhamService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\LoaiSanPhamService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\LoaiSanPhamService.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAowAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T04:13:21.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\wwwroot\\app.css",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\app.css",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\wwwroot\\app.css",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\app.css",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAADQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-06-11T09:36:35.479Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\App.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\App.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\App.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T09:38:11.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "KhoUserService.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\KhoUserService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Service\\KhoUserService.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Service\\KhoUserService.cs",
+              "RelativeToolTip": "BlazorApp4\\Service\\KhoUserService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T04:11:57.574Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "User.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\User.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\User.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\User.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\User.razor",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAAABMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T04:08:19.96Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SanPham.razor",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\SanPham.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Components\\Pages\\SanPham.razor",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Components\\Pages\\SanPham.razor",
+              "RelativeToolTip": "BlazorApp4\\Components\\Pages\\SanPham.razor",
+              "ViewState": "AQIAAJMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T04:08:07.866Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Kho_User.cs",
+              "DocumentMoniker": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Kho_User.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\Kho_User.cs",
+              "ToolTip": "C:\\Users\\banmu\\source\\repos\\BlazorApp4\\BlazorApp4\\Models\\Kho_User.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\Kho_User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T02:25:12.206Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

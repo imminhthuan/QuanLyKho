@@ -1,0 +1,120 @@
+﻿@page "/kho"
+@using BlazorApp4.Service
+@inject KhoService khoService
+@rendermode InteractiveServer
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên Kho</th>
+            <th>Ghi Chú</th>
+            <th>Hành Động</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (khos != null)
+        {
+            @foreach (var kho in khos)
+            {
+                <tr>
+                    <td>@kho.tenKho</td>
+                    <td>@kho.ghiChu</td>
+                    <td><button @onclick="() => EditKho(kho)">Edit</button></td>
+                    <td><button @onclick="() => DeleteKho(kho.kho_Auto_ID)">Delete</button></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Thêm/Chỉnh sửa Loại Sản Phẩm</h3>
+
+@if (!isEditing)
+{
+    <form @onsubmit="AddKho">
+        <div>
+            <label for="tenKho">Tên Kho:</label>
+            <input id="tenKho" @bind="newKho.tenKho" />
+        </div>
+        <div>
+            <label for="ghiChu">Ghi Chú:</label>
+            <input id="ghiChu" @bind="newKho.ghiChu" />
+        </div>
+
+        <button type="submit">Thêm mới</button>
+    </form>
+}
+else
+{
+    <form @onsubmit="UpdateKho">
+        <div>
+            <label for="tenKho">Tên Kho:</label>
+            <input id="tenKho" @bind="newKho.tenKho" />
+        </div>
+
+        <div>
+            <label for="ghiChu">Ghi Chú:</label>
+            <input id="ghiChu" @bind="newKho.ghiChu" />
+        </div>
+
+        <button type="submit">Lưu cập nhật</button>
+        <button type="button" @onclick="CancelEdit">Hủy</button>
+    </form>
+}
+
+
+@code {
+    private List<BlazorApp4.Models.Kho> khos;
+    private BlazorApp4.Models.Kho newKho = new BlazorApp4.Models.Kho();
+    private bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        khos = await khoService.GetKhoAllAsync();
+    }
+
+    private async Task AddKho()
+    {
+        await khoService.AddKhoAsync(newKho);
+        newKho = new BlazorApp4.Models.Kho();
+        khos = await khoService.GetKhoAllAsync();
+    }
+
+    private async Task UpdateKho()
+    {
+        await khoService.UpdateKhoAsync(newKho.kho_Auto_ID, newKho);
+        newKho = new BlazorApp4.Models.Kho();
+        khos = await khoService.GetKhoAllAsync();
+        isEditing = false;
+    }
+
+    private async Task EditKho(BlazorApp4.Models.Kho kho)
+    {
+        newKho = new BlazorApp4.Models.Kho()
+            {
+                kho_Auto_ID = kho.kho_Auto_ID,
+                tenKho = kho.tenKho,
+                ghiChu = kho.ghiChu
+            };
+        isEditing = true;
+    }
+
+    private async Task DeleteKho(int id)
+    {
+        await khoService.DeleteKhoAsync(id);
+        khos = await khoService.GetKhoAllAsync();
+    }
+
+    private void CancelEdit()
+    {
+        newKho = new BlazorApp4.Models.Kho();
+        isEditing = false;
+    }
+}

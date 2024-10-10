@@ -1,0 +1,635 @@
+﻿@page "/xuatkho"
+@using BlazorApp4.Models
+@using BlazorApp4.Service
+@inject XuatKhoService xuatkhoService
+@inject XuatKhoRawDataService xuatkhorawdataservice
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+<div class="row">
+    <div class="col-lg-6">
+        <h3>Quản lý Xuất Kho</h3>
+    </div>
+    <div class="col-lg-6 text-end">
+        <button class="btn btn-success" @onclick="() => { isEditing = false; newXuatKho = new BlazorApp4.Models.XuatKho(); newXuatKhoRawData = new BlazorApp4.Models.Xuat_Kho_Raw_Data(); ShowModalsXuat(); }">Thêm mới</button>
+        <button class="btn btn-success" @onclick="() => { isEditing = false; PDFS(); }">In tất cả</button>
+    </div>
+</div>
+
+@if (xuatKhos == null || khos == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Số Phiếu</th>
+                <th>Ngày Xuất Kho</th>
+                <th>Kho</th>
+                <th>Ghi Chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var xuatKho in xuatKhos)
+            {
+                <tr>
+                    <td>
+                        <label class="custom-checkbox cursor-pointer">
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <a @onclick="() => Modal(xuatKho.xuatKho_Auto_ID)" class="mr-3 cursor-pointer"><i class="fas fa-eye"></i></a>
+                        <a @onclick="() => ShowPDFModals(xuatKho.xuatKho_Auto_ID)" class="cursor-pointer"><i class="fas fa-file-pdf"></i></a>
+                    </td>
+                    <td>@xuatKho.soPhieuXuatKho</td>
+                    <td>@xuatKho.ngayXuatKho</td>
+                    <td>@xuatKho.kho.tenKho</td>
+                    <td>@xuatKho.ghiChu</td>
+                    <td>
+                        @*  <button class="btn btn-primary" @onclick="() => EditNhapKho(nhapkho)">Sửa</button> *@
+                      @*   <button class="btn btn-danger" @onclick="() => DeleteNhapKho(xuatKho.xuatKho_Auto_ID)">Xóa</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@* Thông tin chi tiết nhập kho *@
+<div class="modal fade" id="mymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <!-- Sử dụng class 'modal-lg' để mở rộng modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Phiếu</th>
+                            <th>Ngày Xuất Kho</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (xuat_Kho_Raw_Datas != null)
+                        {
+                            @foreach (var xuat_Kho_Raw_Data in xuat_Kho_Raw_Datas)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td>@xuat_Kho_Raw_Data.xuatKho.soPhieuXuatKho</td>
+                                    <td>@xuat_Kho_Raw_Data.xuatKho.ngayXuatKho</td>
+                                    <td>@xuat_Kho_Raw_Data.soLuongXuat</td>
+                                    <td>@xuat_Kho_Raw_Data.donGiaXuat</td>
+                                    <td>@(xuat_Kho_Raw_Data.soLuongXuat * xuat_Kho_Raw_Data.donGiaXuat)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Thêm xuất Kho và Chi tiết Xuất kho *@
+<div class="modal fade" id="Modalss" tabindex="-1" aria-labelledby="loaisanphamModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loaisanphamModalLabel">@(!isEditing ? "Thêm Nhập Kho Và Chi Tiết Nhập kho" : "Chỉnh sửa")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="maLoaiSanPham">Số Phiếu:</label>
+                    <input class="form-control" id="maLoaiSanPham" @bind="newXuatKho.soPhieuXuatKho" />
+                </div>
+                <div class="form-group">
+                    <label for="ngayNhapKho">Ngày Nhập Kho:</label>
+                    <input class="form-control" type="date" id="ngayNhapKho" @bind="newXuatKho.ngayXuatKho" />
+                </div>
+                <div class="form-group">
+                    <label for="kho_Auto_ID">Kho</label>
+                    <InputSelect id="kho_Auto_ID" class="form-control" @bind-Value="newXuatKho.Kho_ID">
+                        <option value="">Mời Chọn</option>
+                        @if (khos != null)
+                        {
+                            @foreach (var item in khos)
+                            {
+                                <option value="@item.kho_Auto_ID">@item.tenKho</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+                <div class="form-group">
+                    <label for="ghiChu">Ghi Chú:</label>
+                    <input class="form-control" id="ghiChu" @bind="newXuatKho.ghiChu" />
+                </div>
+                <br />
+                <div>
+                    <button class="btn btn-success" @onclick="AddXuatKhoRowShowModalsXuat">Thêm mới</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (tempNhapKhoRawDatas != null)
+                        {
+                            @foreach (var nhap_Kho_Raw_Data in tempNhapKhoRawDatas)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td>@nhap_Kho_Raw_Data.soLuongXuat</td>
+                                    <td>@nhap_Kho_Raw_Data.donGiaXuat</td>
+                                    <td>@(nhap_Kho_Raw_Data.soLuongXuat * nhap_Kho_Raw_Data.donGiaXuat)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CancelEdit">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="AddNhapKho">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PDFModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xuất PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-lg-12 text-center" style="padding: 0;">
+                        <h3 style="margin: 0;">Phiếu Xuất Kho</h3>
+                        <p style="margin: 0;">Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                        <p style="margin: 0;">Số: <b>38/2016</b></p>
+                    </div>
+                    <div class="col-lg-6" style="padding: 1;">
+                        <p style="margin: 0;">I. <b>Thông tin chung</b></p>
+                        <p style="margin: 0;">1. Lệnh giao hàng: <b>425/07</b></p>
+                        <p style="margin: 0;">2. Của hàng: <b>Khách lẻ</b></p>
+                        <p style="margin: 0;">3. Kho: <b>KHO HIỆP TRÍ - THỦ ĐỨC</b></p>
+                        <p style="margin: 0;">4. Ghi chú: <b>Khách lẻ (Hiền gái)</b></p>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>PO</th>
+                            <th>Số Chỉ Lệnh</th>    
+                            <th>SL</th>
+                            <th>ĐVT</th>
+                            <th>Kiểm Kê</th>
+                            <th>Ghi Chú</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (xuat_Kho_Raw_Datas != null)
+                        {
+                            @foreach (var xuat_Kho_Raw_Data in xuat_Kho_Raw_Datas)
+                            {
+                                <tr>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6><b>III.</b><b>Kết Luận</b></h6>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>1. Tổng số lượng thực xuất (viết bằng số) :</b><b>4</b>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>2. Tổng số lượng thực xuất (viết bằng chữ) :</b><b>Bốn</b>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>3. Mô tả khác biệt :</b>
+                        <p>--------------------------------------------------------------</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người lập phiếu</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người nhận hàng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Điều phối</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Giám đốc</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" >In file</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* In tất cả *@
+<div class="modal fade" id="PDFS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xuất PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-lg-12 text-center" style="padding: 0;">
+                        <h3 style="margin: 0;">Phiếu Xuất Kho</h3>
+                        <p style="margin: 0;">Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                        <p style="margin: 0;">Số: <b>38/2016</b></p>
+                    </div>
+                    <div class="col-lg-6" style="padding: 1;">
+                        <p style="margin: 0;">I. <b>Thông tin chung</b></p>
+                        <p style="margin: 0;">1. Lệnh giao hàng: <b>425/07</b></p>
+                        <p style="margin: 0;">2. Của hàng: <b>Khách lẻ</b></p>
+                        <p style="margin: 0;">3. Kho: <b>KHO HIỆP TRÍ - THỦ ĐỨC</b></p>
+                        <p style="margin: 0;">4. Ghi chú: <b>Khách lẻ (Hiền gái)</b></p>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>PO</th>
+                            <th>Số Chỉ Lệnh</th>
+                            <th>SL</th>
+                            <th>ĐVT</th>
+                            <th>Kiểm Kê</th>
+                            <th>Ghi Chú</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (xuatkhodata != null)
+                        {
+                            @foreach (var xuat_Kho_Raw_Data in xuatkhodata)
+                            {
+                                <tr>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@xuat_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6><b>III.</b><b>Kết Luận</b></h6>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>1. Tổng số lượng thực xuất (viết bằng số) :</b><b>4</b>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>2. Tổng số lượng thực xuất (viết bằng chữ) :</b><b>Bốn</b>
+                    </div>
+                    <div class="col-lg-12">
+                        <b>3. Mô tả khác biệt :</b>
+                        <p>--------------------------------------------------------------</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người lập phiếu</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người nhận hàng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Điều phối</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Giám đốc</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*Add chi tiết Xuất kho*@
+<div class="modal fade" id="AddXuatKhoRowShowModalsXuat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form @onsubmit="AddXuatKhoRawData">
+                    <div class="form-group">
+                        <label for="sanPham_Auto_ID">Mã Sản Phẩm</label>
+                        <InputSelect id="sanPham_Auto_ID" class="form-control" @bind-Value="newXuatKhoRawData.sanPham_ID">
+                            <option value="">Mời Chọn</option>
+                            @if (sanPhams != null)
+                            {
+                                @foreach (var item in sanPhams)
+                                {
+                                    <option value="@item.loaiSanPham_Auto_ID">@item.maSanPham</option>
+                                }
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group">
+                        <label for="sanPham_Auto_ID">Tên Sản Phẩm</label>
+                        <InputSelect id="sanPham_Auto_ID" class="form-control" @bind-Value="newXuatKhoRawData.sanPham_ID">
+                            <option value="">Mời Chọn</option>
+                            @if (sanPhams != null)
+                            {
+                                @foreach (var item in sanPhams)
+                                {
+                                    <option value="@item.loaiSanPham_Auto_ID">@item.tenSanpham</option>
+                                }
+                            }
+                        </InputSelect>
+                    </div>
+                    <div>
+                        <label for="soLuongXuat">Số Lượng:</label>
+                        <input class="form-control" id="soLuongXuat" @bind="newXuatKhoRawData.soLuongXuat" />
+                    </div>
+                    <div>
+                        <label for="donGiaXuat">Đơn Giá:</label>
+                        <input class="form-control" id="donGiaXuat" @bind="newXuatKhoRawData.donGiaXuat" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="AddXuatKhoRawData">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
+<script>
+    window.Modal = () => {
+        $('#mymodal').modal('show');
+    }
+    window.ShowModalsXuat = () => {
+        $('#Modalss').modal('show');
+    }
+    window.AddXuatKhoRowShowModalsXuat = () => {
+        $('#AddXuatKhoRowShowModalsXuat').modal('show');
+        $('#Modalss').modal('hide');
+    }
+    window.HideModals = () => {
+        $('#Modalss').modal('hide');
+    }
+    window.HideAddXuatKhoRowModal = () => {
+        $('#AddXuatKhoRowShowModalsXuat').modal('hide');
+        $('#Modalss').modal('show');
+    }
+    $('#AddXuatKhoRowShowModalsXuat').on('hidden.bs.modal', function () {
+        $('#Modalss').modal('show');
+    });
+
+    window.ShowPDFModals = () => {
+        $('#PDFModals').modal('show');
+    }
+
+
+    window.PDFS = () => {
+        $('#PDFS').modal('show');
+    }
+
+    window.exportPDF = (data) => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text("Chi Tiết Xuất Kho", 10, 10);
+        doc.autoTable({
+            head: [['Mã Hàng', 'Sản Phẩm', 'Số Lượng', 'Đơn giá', 'Trị Giá']],
+            body: data.map(row => [
+                row.sanPham.maSanPham,
+                row.sanPham.tenSanpham,
+                row.soLuongXuat,
+                row.donGiaXuat,
+                (row.soLuongXuat * row.donGiaXuat).toFixed(2)
+            ]),
+        });
+
+        doc.save('xuat_kho.pdf');
+        $('#PDFModals').modal('hide');
+    }
+</script>
+
+@code {
+    private List<BlazorApp4.Models.Xuat_Kho_Raw_Data> xuat_Kho_Raw_Datas;
+    private List<BlazorApp4.Models.Xuat_Kho_Raw_Data> tempNhapKhoRawDatas = new List<BlazorApp4.Models.Xuat_Kho_Raw_Data>();
+    private List<BlazorApp4.Models.Xuat_Kho_Raw_Data> xuatkhodata = new List<BlazorApp4.Models.Xuat_Kho_Raw_Data>();
+    private List<BlazorApp4.Models.XuatKho> xuatKhos;
+    private List<BlazorApp4.Models.SanPham> sanPhams;
+    private List<BlazorApp4.Models.Kho> khos;
+    private BlazorApp4.Models.XuatKho newXuatKho = new BlazorApp4.Models.XuatKho();
+    private BlazorApp4.Models.Xuat_Kho_Raw_Data newXuatKhoRawData = new BlazorApp4.Models.Xuat_Kho_Raw_Data();
+    private bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        khos = await xuatkhoService.GetAllkhoAsync();
+        xuatKhos = await xuatkhoService.GetAllXuatKhoAsync();
+        sanPhams = await xuatkhorawdataservice.GetAllSanPhamAsync();
+        xuatkhorawdataservice.SetSanPhams(sanPhams);
+        tempNhapKhoRawDatas = xuatkhorawdataservice.GetTempXuatKhoRawDatas();
+        xuatkhodata = await xuatkhorawdataservice.GetAllXuatKhoAsync();
+
+    }
+
+    private void AddXuatKhoRawData()
+    {
+
+        xuatkhorawdataservice.AddXuatKhoRawData(newXuatKhoRawData);
+        newXuatKhoRawData = new Xuat_Kho_Raw_Data();
+        HideAddXuatKhoRowModal();
+    }
+
+    private async Task AddNhapKho()
+    {
+        try
+        {
+            await xuatkhorawdataservice.AddNhapKhoAsync(newXuatKho);
+            xuatKhos = await xuatkhoService.GetAllXuatKhoAsync();
+            newXuatKho = new BlazorApp4.Models.XuatKho();
+            xuatkhorawdataservice.ClearTempNhapKhoRawDatas();
+            isEditing = false;
+
+            await JSRuntime.InvokeVoidAsync("HideModals");
+        }
+        catch (Exception ex)
+        {
+            // Xử lý lỗi nếu có
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void AddTempNhapKhoRawData(Xuat_Kho_Raw_Data newXuatKhoRawData)
+    {
+        xuatkhorawdataservice.AddXuatKhoRawData(newXuatKhoRawData);
+    }
+
+
+    // private async Task UpdateXuatKho()
+    // {
+    //     await xuatkhoService.UpdateNhapKhoAsync(newNhapKho.nhapkho_Auto_ID, newNhapKho);
+    //     newNhapKho = new BlazorApp4.Models.Nhap_Kho();
+    //     nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+    //     isEditing = false;
+    // }
+
+    // private void EditNhapKho(BlazorApp4.Models.Nhap_Kho nhapkho)
+    // {
+    //     newNhapKho = new BlazorApp4.Models.Nhap_Kho()
+    //         {
+    //             nhapkho_Auto_ID = nhapkho.nhapkho_Auto_ID,
+    //             soPhieuNhapKho = nhapkho.soPhieuNhapKho,
+    //             ngayNhapKho = nhapkho.ngayNhapKho,
+    //             kho_Auto_ID = nhapkho.kho_Auto_ID,
+    //             nhaCungCap_Auto_ID = nhapkho.nhaCungCap_Auto_ID,
+    //             ghiChu = nhapkho.ghiChu
+    //         };
+    //     isEditing = true;
+    // }
+
+    // private async Task DeleteNhapKho(int id)
+    // {
+    //     await nhapkhoService.DeleteNhaKhoAsync(id);
+    //     nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+    // }
+
+     private void CancelEdit()
+    {
+         newXuatKho = new BlazorApp4.Models.XuatKho();
+         isEditing = false;
+    }
+    private async Task Modal(int xuatKhoId)
+    {
+        xuat_Kho_Raw_Datas = await xuatkhorawdataservice.GetNhapKhoRawDataByXuatKhoIdAsync(xuatKhoId);
+        await JSRuntime.InvokeVoidAsync("Modal");
+    }
+
+    private async Task ShowPDFModals(int xuatKhoId)
+    {
+        xuat_Kho_Raw_Datas = await xuatkhorawdataservice.GetNhapKhoRawDataByXuatKhoIdAsync(xuatKhoId);
+        await JSRuntime.InvokeVoidAsync("ShowPDFModals");
+    }
+    private async Task ShowModalsXuat()
+    {
+        await JSRuntime.InvokeVoidAsync("ShowModalsXuat");
+    }
+
+    private async Task AddXuatKhoRowShowModalsXuat()
+    {
+        await JSRuntime.InvokeVoidAsync("AddXuatKhoRowShowModalsXuat");
+
+    }
+    private async void HideAddXuatKhoRowModal()
+    {
+        await JSRuntime.InvokeVoidAsync("HideAddXuatKhoRowModal");
+    }
+
+    private async void SaveAndHideAddXuatKhoRowModal()
+    {
+        await JSRuntime.InvokeVoidAsync("HideAddXuatKhoRowModal");
+    }
+
+    private async Task PDFS()
+    {
+        await JSRuntime.InvokeVoidAsync("PDFS");
+    }
+
+}
+

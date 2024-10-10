@@ -1,0 +1,194 @@
+﻿@page "/sanpham"
+@using BlazorApp4.Models
+@using BlazorApp4.Service
+@inject SanPhamService sanPhamService
+@rendermode InteractiveServer
+
+<h3>Quản lý Sản Phẩm</h3>
+
+@if (sanPhams == null || donViTinhs == null || loaiSanPhams == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã Sản Phẩm</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Loại Sản Phẩm</th>
+                <th>Đơn Vị Tính</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sanPham in sanPhams)
+            {
+                <tr>
+                    <td>@sanPham.maSanPham</td>
+                    <td>@sanPham.tenSanpham</td>
+                    <td>@sanPham.loaiSanPham.tenLoaiSanPham</td>
+                    <td>@sanPham.donViTinh.tenDonViTinh</td>
+                    <td>@sanPham.ghiChu</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditSanPham(sanPham)">Sửa</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteSanPham(sanPham.sanPham_Auto_ID)">Xóa</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h3>Thêm/Chỉnh sửa Loại Sản Phẩm</h3>
+
+@if (!isEditing)
+{
+    <form @onsubmit="AddSanPham">
+        <div class="form-group">
+            <label  for="maSanPham">Mã Sản Phẩm:</label>
+            <input class="form-control" id="maSanPham" @bind="newSanPham.maSanPham" />
+        </div>
+        <div class="form-group">
+            <label  for="tenSanpham">Tên Sản Phẩm:</label>
+            <input class="form-control" id="tenSanpham" @bind="newSanPham.tenSanpham" />
+        </div>
+        <div class="form-group">
+            <label for="loaiSanPham_Auto_ID">Loại Sản Phẩm</label>
+            <InputSelect id="loaiSanPham_Auto_ID" class="form-control" @bind-Value="newSanPham.loaiSanPham_Auto_ID">
+                <option value="">Mời Chọn</option>
+                @if (loaiSanPhams != null)
+                {
+                    @foreach (var item in loaiSanPhams)
+                    {
+                        <option value="@item.loaiSanPham_Auto_ID">@item.tenLoaiSanPham</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label for="donViTinh_Auto_ID">Đơn Vị Tính</label>
+            <InputSelect id="donViTinh_Auto_ID" class="form-control" @bind-Value="newSanPham.donViTinh_Auto_ID">
+                <option value="">Mời Chọn</option>
+                @if (donViTinhs != null)
+                {
+                    @foreach (var item in donViTinhs)
+                    {
+                        <option value="@item.donViTinh_Auto_ID">@item.tenDonViTinh</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <div>
+            <label  for="ghiChu">Ghi Chú:</label>
+            <input class="form-control" id="ghiChu" @bind="newSanPham.ghiChu" />
+        </div>
+
+        <button type="submit">Thêm mới</button>
+    </form>
+}
+else
+{
+    <form @onsubmit="UpdateSanPham">
+        <div class="form-group">
+            <label  for="maSanPham">Mã Sản Phẩm:</label>
+            <input class="form-control" id="maSanPham" @bind="newSanPham.maSanPham" />
+        </div>
+        <div class="form-group">
+            <label for="tenSanPham">Tên Sản Phẩm:</label>
+            <input class="form-control" id="tenSanpham" @bind="newSanPham.tenSanpham" />
+        </div>
+        <div class="form-group">
+            <label class="form-control" for="loaiSanPham_Auto_ID">Loại Sản Phẩm</label>
+            <InputSelect id="loaiSanPham_Auto_ID" class="form-control" @bind-Value="newSanPham.loaiSanPham_Auto_ID">
+                <option value="">Mời Chọn</option>
+                @if (loaiSanPhams != null)
+                {
+                    @foreach (var item in loaiSanPhams)
+                    {
+                        <option value="@item.loaiSanPham_Auto_ID">@item.tenLoaiSanPham</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label class="form-control" for="donViTinh_Auto_ID">Đơn Vị Tính</label>
+            <InputSelect id="donViTinh_Auto_ID" class="form-control" @bind-Value="newSanPham.donViTinh_Auto_ID">
+                <option value="">Mời Chọn</option>
+                @if (donViTinhs != null)
+                {
+                    @foreach (var item in donViTinhs)
+                    {
+                        <option value="@item.donViTinh_Auto_ID">@item.tenDonViTinh</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label for="ghiChu">Ghi Chú:</label>
+            <input class="form-control" id="ghiChu" @bind="newSanPham.ghiChu" />
+        </div>
+
+        <button type="submit">Lưu cập nhật</button>
+        <button type="button" @onclick="CancelEdit">Hủy</button>
+    </form>
+}
+
+@code {
+    private List<BlazorApp4.Models.SanPham> sanPhams;
+    private List<BlazorApp4.Models.LoaiSanPham> loaiSanPhams;
+    private List<BlazorApp4.Models.DonViTinh> donViTinhs;
+    private BlazorApp4.Models.SanPham newSanPham = new BlazorApp4.Models.SanPham();
+    private bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        loaiSanPhams = await sanPhamService.GetAllLoaiSanPhamAsync();
+        donViTinhs = await sanPhamService.GetAllDonViTinhAsync();
+        sanPhams = await sanPhamService.GetAllSanPhamAsync();
+    }
+
+    private async Task AddSanPham()
+    {
+        await sanPhamService.AddSanPhamAsync(newSanPham);
+        sanPhams = await sanPhamService.GetAllSanPhamAsync();
+        newSanPham = new BlazorApp4.Models.SanPham();
+        isEditing = false;
+    }
+
+    private async Task UpdateSanPham()
+    {
+        await sanPhamService.UpdateSanPhamAsync(newSanPham.sanPham_Auto_ID, newSanPham);
+        newSanPham = new BlazorApp4.Models.SanPham();
+        sanPhams = await sanPhamService.GetAllSanPhamAsync();
+        isEditing = false;
+    }
+
+    private void EditSanPham(BlazorApp4.Models.SanPham sanPham)
+    {
+        newSanPham = new BlazorApp4.Models.SanPham()
+            {
+                sanPham_Auto_ID = sanPham.sanPham_Auto_ID,
+                maSanPham = sanPham.maSanPham,
+                tenSanpham = sanPham.tenSanpham,
+                donViTinh_Auto_ID = sanPham.donViTinh_Auto_ID,
+                loaiSanPham_Auto_ID = sanPham.loaiSanPham_Auto_ID,
+                ghiChu = sanPham.ghiChu
+            };
+        isEditing = true;
+    }
+
+    private async Task DeleteSanPham(int id)
+    {
+        await sanPhamService.DeleteSanPhamAsync(id);
+        sanPhams = await sanPhamService.GetAllSanPhamAsync();
+    }
+
+    private void CancelEdit()
+    {
+        newSanPham = new BlazorApp4.Models.SanPham();
+        isEditing = false;
+    }
+}

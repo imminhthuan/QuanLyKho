@@ -1,0 +1,671 @@
+﻿@page "/nhapkho"
+@using BlazorApp4.Models
+@using BlazorApp4.Service
+@inject NhapKhoService nhapkhoService
+@inject NhapKhoRawDataService nhapkhorawdataservice
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <h3>Quản lý Nhập Kho</h3>
+    </div>
+    <div class="col-lg-6 text-end">
+        <button class="btn btn-success" @onclick="() => { isEditing = false; newNhapKho = new BlazorApp4.Models.Nhap_Kho(); newNhapKhoRawData = new BlazorApp4.Models.Nhap_Kho_Raw_Data(); ShowModals(); }">Thêm mới</button>
+        <button class="btn btn-success" @onclick="() => { isEditing = false; PDF(); }">In tất cả</button>
+    </div>
+</div>
+
+@if (nhapKhos == null || khos == null || nhacungcaps == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="text-center">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Số Phiếu </th>
+                <th>Ngày Nhập Kho</th>
+                <th>Kho</th>
+                <th>Nhà Cung Cấp</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var nhapkho in nhapKhos)
+            {
+                <tr>
+                    <td>
+                        <label class="custom-checkbox cursor-pointer">
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <a @onclick="() => Modal(nhapkho.nhapkho_Auto_ID)" class="mr-3 cursor-pointer"><i class="fas fa-eye"></i></a>
+                        <a @onclick="() => ShowPDFModal(nhapkho.nhapkho_Auto_ID)" class="cursor-pointer"><i class="fas fa-file-pdf"></i></a>
+                    </td>
+                    <td>@nhapkho.soPhieuNhapKho</td>
+                    <td>@nhapkho.ngayNhapKho</td>
+                    <td>@nhapkho.kho.tenKho</td>
+                    <td>@nhapkho.nhaCungCap.tenNhaCungcap</td>
+                    <td>@nhapkho.ghiChu</td>
+                    <td>
+                        <a @onclick="() => EditNhapKho(nhapkho)" class="text-warning mr-3 cursor-pointer"><i class="fas fa-pencil-alt"></i></a>
+                        <a @onclick="() => DeleteNhapKho(nhapkho.nhapkho_Auto_ID)" class="text-danger cursor-pointer"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@* Thông tin chi tiết nhập kho *@
+<div class="modal fade" id="mymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <!-- Sử dụng class 'modal-lg' để mở rộng modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th></th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Phiếu</th>
+                            <th>Ngày Nhập Kho</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (nhap_Kho_Raw_Datas != null)
+                        {
+                            @foreach (var nhap_Kho_Raw_Data in nhap_Kho_Raw_Datas)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td>@nhap_Kho_Raw_Data.nhapKho.soPhieuNhapKho</td>
+                                    <td>@nhap_Kho_Raw_Data.nhapKho.ngayNhapKho</td>
+                                    <td>@nhap_Kho_Raw_Data.soLuongNhap</td>
+                                    <td>@nhap_Kho_Raw_Data.donGiaNhap</td>
+                                    <td>@(nhap_Kho_Raw_Data.soLuongNhap * nhap_Kho_Raw_Data.donGiaNhap)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Xuất file PDF *@
+<div class="modal fade" id="PDFModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xuất PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-lg-4" style="padding: 1;">
+                        <p style="margin: 0;">Đơn vị: <b>Đơn Vị A</b></p>
+                        <p style="margin: 0;">Bộ phận: <b>Bộ Phận B</b></p>
+                        <p style="margin: 0;">Ngày tháng năm: <b>@DateTime.Now.ToString("dd/MM/yyyy")</b></p>
+                        <p style="margin: 0;">Số phiếu nhập: <b></b></p>
+                        <p style="margin: 0;">Họ tên người giao hàng: <b></b></p>
+                        <p style="margin: 0;">Theo TK số: <b></b></p>
+                        <p style="margin: 0;">Nhập tại kho: <b></b></p>
+                    </div>
+                    <div class="col-lg-4 text-center" style="padding: 0;">
+                        <h3 style="margin: 0;">Phiếu nhập Kho</h3>
+                        <p style="margin: 0;">Nợ: ............. Có: .............</p>
+                        <p style="margin: 0;">Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                        <p style="margin: 0;">Địa điểm: <b>Địa Điểm C</b></p>
+                    </div>
+                    <div class="col-lg-4 text-center text-end" style="padding: 0;">
+                        <h4 style="margin: 0;">Mẫu số: 01 - VT</h4>
+                        <p style="margin: 0;">(Ban hành theo QĐ số 15/2006/QĐ-BTC ngày 20/03/2006 của Bộ trưởng BTC)</p>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (nhap_Kho_Raw_Datas != null)
+                        {
+                            @foreach (var nhap_Kho_Raw_Data in nhap_Kho_Raw_Datas)
+                            {
+                                <tr>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td>@nhap_Kho_Raw_Data.soLuongNhap</td>
+                                    <td>@nhap_Kho_Raw_Data.donGiaNhap</td>
+                                    <td>@(nhap_Kho_Raw_Data.soLuongNhap * nhap_Kho_Raw_Data.donGiaNhap)</td>
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6><b>Tổng Số Tiền (Viết Bằng Chữ) :</b><b>Hai mươi mốt nghình một trăm mười một USD</b></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6><b>Số Chức Từ Gốc Kèm Theo :</b><b>..................</b></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người Lập Phiếu</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người Giao Hàng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Thủ Kho</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Kế Toán Trưởng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="ExportPDF">In file</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Thêm Nhập Kho và Chi tiết nhạp kho *@
+<div class="modal fade" id="Modals" tabindex="-1" aria-labelledby="loaisanphamModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loaisanphamModalLabel">@(!isEditing ? "Thêm Nhập Kho Và Chi Tiết Nhập kho" : "Chỉnh sửa")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="maLoaiSanPham">Số Phiếu:</label>
+                            <input class="form-control" id="maLoaiSanPham" @bind="newNhapKho.soPhieuNhapKho" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="ngayNhapKho">Ngày Nhập Kho:</label>
+                            <input class="form-control" type="date" id="ngayNhapKho" @bind="newNhapKho.ngayNhapKho" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="kho_Auto_ID">Kho</label>
+                            <InputSelect id="kho_Auto_ID" class="form-control" @bind-Value="newNhapKho.kho_Auto_ID">
+                                <option value="">Mời Chọn</option>
+                                @if (khos != null)
+                                {
+                                    @foreach (var item in khos)
+                                    {
+                                        <option value="@item.kho_Auto_ID">@item.tenKho</option>
+                                    }
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="nhaCungCap_Auto_ID">Nhà cung Cấp</label>
+                            <InputSelect id="nhaCungCap_Auto_ID" class="form-control" @bind-Value="newNhapKho.nhaCungCap_Auto_ID">
+                                <option value="">Mời Chọn</option>
+                                @if (nhacungcaps != null)
+                                {
+                                    @foreach (var item in nhacungcaps)
+                                    {
+                                        <option value="@item.nhaCungCap_Auto_ID">@item.tenNhaCungcap</option>
+                                    }
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="ghiChu">Ghi Chú:</label>
+                            <input class="form-control" id="ghiChu" @bind="newNhapKho.ghiChu" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <button class="btn btn-success" @onclick="AddNhapKhoRowShowModals">Thêm mới</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th></th>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (tempNhapKhoRawDatas != null)
+                        {
+                            @foreach (var nhap_Kho_Raw_Data in tempNhapKhoRawDatas)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.maSanPham</td>
+                                    <td>@nhap_Kho_Raw_Data.sanPham.tenSanpham</td>
+                                    <td>@nhap_Kho_Raw_Data.soLuongNhap</td>
+                                    <td>@nhap_Kho_Raw_Data.donGiaNhap</td>
+                                    <td>@(nhap_Kho_Raw_Data.soLuongNhap * nhap_Kho_Raw_Data.donGiaNhap)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CancelEdit">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="AddNhapKho">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Add chi tiết nhập kho*@
+<div class="modal fade" id="AddNhapKhoRowShowModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form @onsubmit="AddNhapKhoRawData">
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="sanPham_Auto_ID">Mã Sản Phẩm</label>
+                                <InputSelect id="sanPham_Auto_ID" class="form-control" @bind-Value="newNhapKhoRawData.sanPham_Auto_ID">
+                                    <option value="">Mời Chọn</option>
+                                    @if (sanPhams != null)
+                                    {
+                                        @foreach (var item in sanPhams)
+                                        {
+                                            <option value="@item.loaiSanPham_Auto_ID">@item.maSanPham</option>
+                                        }
+                                    }
+                                </InputSelect>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label for="sanPham_Auto_ID">Tên Sản Phẩm</label>
+                                <InputSelect id="sanPham_Auto_ID" class="form-control" @bind-Value="newNhapKhoRawData.sanPham_Auto_ID">
+                                    <option value="">Mời Chọn</option>
+                                    @if (sanPhams != null)
+                                    {
+                                        @foreach (var item in sanPhams)
+                                        {
+                                            <option value="@item.loaiSanPham_Auto_ID">@item.tenSanpham</option>
+                                        }
+                                    }
+                                </InputSelect>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="soLuongNhap">Số Lượng:</label>
+                                <input class="form-control" id="soLuongNhap" @bind="newNhapKhoRawData.soLuongNhap" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="donGiaNhap">Đơn Giá:</label>
+                                <input class="form-control" id="donGiaNhap" @bind="newNhapKhoRawData.donGiaNhap" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="AddNhapKhoRawData">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*In file PDF*@
+<div class="modal fade" id="PDF" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Chi Tiết Nhập Kho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-lg-4" style="padding: 1;">
+                        <p style="margin: 0;">Đơn vị: <b>Đơn Vị A</b></p>
+                        <p style="margin: 0;">Bộ phận: <b>Bộ Phận B</b></p>
+                        <p style="margin: 0;">Ngày tháng năm: <b>@DateTime.Now.ToString("dd/MM/yyyy")</b></p>
+                        <p style="margin: 0;">Số phiếu nhập: <b></b></p>
+                        <p style="margin: 0;">Họ tên người giao hàng: <b></b></p>
+                        <p style="margin: 0;">Theo TK số: <b></b></p>
+                        <p style="margin: 0;">Nhập tại kho: <b></b></p>
+                    </div>
+                    <div class="col-lg-4 text-center" style="padding: 0;">
+                        <h3 style="margin: 0;">Phiếu nhập Kho</h3>
+                        <p style="margin: 0;">Nợ: ............. Có: .............</p>
+                        <p style="margin: 0;">Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                        <p style="margin: 0;">Địa điểm: <b>Địa Điểm C</b></p>
+                    </div>
+                    <div class="col-lg-4 text-center text-end" style="padding: 0;">
+                        <h4 style="margin: 0;">Mẫu số: 01 - VT</h4>
+                        <p style="margin: 0;">(Ban hành theo QĐ số 15/2006/QĐ-BTC ngày 20/03/2006 của Bộ trưởng BTC)</p>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Mã Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Trị Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (nhapkhoraw != null)
+                        {
+                            @foreach (var nhapkhoraw in nhapkhoraw)
+                            {
+                                <tr>
+                                    <td>@nhapkhoraw.sanPham.maSanPham</td>
+                                    <td>@nhapkhoraw.sanPham.tenSanpham</td>
+                                    <td>@nhapkhoraw.soLuongNhap</td>
+                                    <td>@nhapkhoraw.donGiaNhap</td>
+                                    <td>@(nhapkhoraw.soLuongNhap * nhapkhoraw.donGiaNhap)</td>
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6><b>Tổng Số Tiền (Viết Bằng Chữ) :</b><b>Hai mươi mốt nghình một trăm mười một USD</b></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6><b>Số Chức Từ Gốc Kèm Theo :</b><b>..................</b></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>Ngày tháng năm: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người Lập Phiếu</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Người Giao Hàng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Thủ Kho</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <b>Kế Toán Trưởng</b>
+                        <p>(ký, họ tên)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" @onclick="AddNhapKhoRawData">In file</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    window.Modal = () => {
+        $('#mymodal').modal('show');
+    }
+    window.ShowModals = () => {
+        $('#Modals').modal('show');
+    }
+    window.AddNhapKhoRowShowModals = () => {
+        $('#AddNhapKhoRowShowModals').modal('show');
+        $('#Modals').modal('hide');
+    }
+    window.HideModals = () => {
+        $('#Modals').modal('hide');
+    }
+    window.HideAddNhapKhoRowModal = () => {
+        $('#AddNhapKhoRowShowModals').modal('hide');
+        $('#Modals').modal('show');
+    }
+    $('#AddNhapKhoRowShowModals').on('hidden.bs.modal', function () {
+        $('#Modals').modal('show');
+    });
+
+    window.ShowPDFModal = () => {
+        $('#PDFModal').modal('show');
+    }
+
+
+    window.PDF = () => {
+        $('#PDF').modal('show');
+    }
+
+    window.exportPDF = (data) => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text("Chi Tiết Nhập Kho", 10, 10);
+        doc.autoTable({
+            head: [['Mã Hàng', 'Sản Phẩm', 'Số Lượng', 'Đơn giá', 'Trị Giá']],
+            body: data.map(row => [
+                row.sanPham.maSanPham,
+                row.sanPham.tenSanpham,
+                row.soLuongNhap,
+                row.donGiaNhap,
+                (row.soLuongNhap * row.donGiaNhap).toFixed(2)
+            ]),
+        });
+
+        doc.save('nhap_kho.pdf');
+        $('#PDFModal').modal('hide');
+    }
+</script>
+
+@code {
+    private List<BlazorApp4.Models.Nhap_Kho_Raw_Data> nhap_Kho_Raw_Datas;
+    private List<BlazorApp4.Models.Nhap_Kho_Raw_Data> tempNhapKhoRawDatas = new List<BlazorApp4.Models.Nhap_Kho_Raw_Data>();
+    private List<BlazorApp4.Models.Nhap_Kho_Raw_Data> nhapkhoraw = new List<BlazorApp4.Models.Nhap_Kho_Raw_Data>();
+    private List<BlazorApp4.Models.Nhap_Kho> nhapKhos;
+    private List<BlazorApp4.Models.SanPham> sanPhams;
+    private List<BlazorApp4.Models.Kho> khos;
+    private List<BlazorApp4.Models.NhaCungCap> nhacungcaps;
+    private BlazorApp4.Models.Nhap_Kho newNhapKho = new BlazorApp4.Models.Nhap_Kho();
+    private BlazorApp4.Models.Nhap_Kho_Raw_Data newNhapKhoRawData = new BlazorApp4.Models.Nhap_Kho_Raw_Data();
+    private bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        khos = await nhapkhoService.GetAllkhoAsync();
+        nhacungcaps = await nhapkhoService.GetAllNhaCungCapAsync();
+        nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+        sanPhams = await nhapkhorawdataservice.GetAllSanPhamAsync();
+        nhapkhorawdataservice.SetSanPhams(sanPhams);
+        tempNhapKhoRawDatas = nhapkhorawdataservice.GetTempNhapKhoRawDatas();
+        nhapkhoraw = await nhapkhorawdataservice.GetAllNhapKhoRawDataAsync();
+
+    }
+
+    private void AddNhapKhoRawData()
+    {
+
+        nhapkhorawdataservice.AddNhapKhoRawData(newNhapKhoRawData);
+        newNhapKhoRawData = new Nhap_Kho_Raw_Data();
+        HideAddNhapKhoRowModal();
+    }
+
+    private async Task AddNhapKho()
+    {
+        try
+        {
+            await nhapkhorawdataservice.AddNhapKhoAsync(newNhapKho);
+            nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+            newNhapKho = new Nhap_Kho();
+            nhapkhorawdataservice.ClearTempNhapKhoRawDatas();
+            isEditing = false;
+
+            await JSRuntime.InvokeVoidAsync("HideModals");
+        }
+        catch (Exception ex)
+        {
+            // Xử lý lỗi nếu có
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void AddTempNhapKhoRawData(Nhap_Kho_Raw_Data newNhapKhoRawData)
+    {
+        nhapkhorawdataservice.AddNhapKhoRawData(newNhapKhoRawData);
+    }
+
+
+    private async Task UpdateNhapKho()
+    {
+        await nhapkhoService.UpdateNhapKhoAsync(newNhapKho.nhapkho_Auto_ID, newNhapKho);
+        newNhapKho = new BlazorApp4.Models.Nhap_Kho();
+        nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+        isEditing = false;
+    }
+
+    private void EditNhapKho(BlazorApp4.Models.Nhap_Kho nhapkho)
+    {
+        newNhapKho = new BlazorApp4.Models.Nhap_Kho()
+            {
+                nhapkho_Auto_ID = nhapkho.nhapkho_Auto_ID,
+                soPhieuNhapKho = nhapkho.soPhieuNhapKho,
+                ngayNhapKho = nhapkho.ngayNhapKho,
+                kho_Auto_ID = nhapkho.kho_Auto_ID,
+                nhaCungCap_Auto_ID = nhapkho.nhaCungCap_Auto_ID,
+                ghiChu = nhapkho.ghiChu
+            };
+        isEditing = true;
+    }
+
+    private async Task DeleteNhapKho(int id)
+    {
+        await nhapkhoService.DeleteNhaKhoAsync(id);
+        nhapKhos = await nhapkhoService.GetAllNhapKhoAsync();
+    }
+
+    private void CancelEdit()
+    {
+        newNhapKho = new BlazorApp4.Models.Nhap_Kho();
+        isEditing = false;
+    }
+    private async Task Modal(int nhapKhoId)
+    {
+        nhap_Kho_Raw_Datas = await nhapkhorawdataservice.GetNhapKhoRawDataByNhapKhoIdAsync(nhapKhoId);
+        await JSRuntime.InvokeVoidAsync("Modal");
+    }
+    private async Task ShowModals()
+    {
+        await JSRuntime.InvokeVoidAsync("ShowModals");
+    }
+    private async Task PDF()
+    {
+        await JSRuntime.InvokeVoidAsync("PDF");
+    }
+
+    private async Task AddNhapKhoRowShowModals()
+    {
+        await JSRuntime.InvokeVoidAsync("AddNhapKhoRowShowModals");
+
+    }
+    private async void HideAddNhapKhoRowModal()
+    {
+        await JSRuntime.InvokeVoidAsync("HideAddNhapKhoRowModal");
+    }
+
+    private async void SaveAndHideAddNhapKhoRowModal()
+    {
+        await JSRuntime.InvokeVoidAsync("HideAddNhapKhoRowModal");
+    }
+
+    private async Task ShowPDFModal(int nhapKhoId)
+    {
+        nhap_Kho_Raw_Datas = await nhapkhorawdataservice.GetNhapKhoRawDataByNhapKhoIdAsync(nhapKhoId);
+        await JSRuntime.InvokeVoidAsync("ShowPDFModal");
+    }
+
+    private async Task ExportPDF()
+    {
+        await JSRuntime.InvokeVoidAsync("exportPDF", nhap_Kho_Raw_Datas);
+    }
+
+}
